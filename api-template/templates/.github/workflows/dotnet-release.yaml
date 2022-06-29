@@ -1,12 +1,11 @@
 name: 'Build and Release'
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [created]
 
 jobs:     
   build:
-    runs-on: stackspot-customer-success-sandbox
+    runs-on: stackspot-customer-success-prd
     strategy:
       matrix:
         dotnet-version: ['6.0.x']
@@ -129,7 +128,7 @@ jobs:
 
   runtime-engine-deploy:
     needs: docker_hub
-    runs-on: stackspot-customer-success-sandbox
+    runs-on: stackspot-customer-success-prd
     steps:
       - uses: actions/checkout@v2
       - name: Deploy
