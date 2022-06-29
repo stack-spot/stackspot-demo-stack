@@ -21,6 +21,14 @@ technologies:
 types:
   - app
 
+inputs:
+- label: Table Name
+  type: text
+  name: table_name
+  #pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+  default: ""  
+  global: true
+  
 hooks:
   #dependencyinjection
   - type: edit
