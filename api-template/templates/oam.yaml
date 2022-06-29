@@ -7,11 +7,11 @@ spec:
   components:
     - name: {{project_name | to_kebab}}
       properties:
-        accountId: "657358158938"
+        accountId: "401767127224"
         addRevisionLabel: false
-        clusterOidc: arn:aws:iam::657358158938:oidc-provider/oidc.eks.sa-east-1.amazonaws.com/id/1032B0E57ECD594A74833DA57A7672B2
+        clusterOidc: arn:aws:iam::401767127224:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/01E2AA384A35E5978648E6558BFA59A5
         exposeType: ClusterIP
-        image: stackspot/dotnet-demo-api:10.0.0
+        image: stackspot/dotnet-demo-api:10.0.1
         region: sa-east-1
         registry: docker.io/
         targetPort: 5001
