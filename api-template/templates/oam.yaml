@@ -11,8 +11,26 @@ spec:
         addRevisionLabel: false
         clusterOidc: arn:aws:iam::401767127224:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/01E2AA384A35E5978648E6558BFA59A5
         exposeType: ClusterIP
-        image: stackspot/dotnet-demo-api:10.0.1
-        region: sa-east-1
-        registry: docker.io/
+        image: docker.io/stackspot/dotnet-demo-api:10.0.1
+        region: {{region_endpoint}}
         targetPort: 5001
       type: microservice
+  policies:
+  - name: env-bindings-openfatorial-dev
+    properties:
+      envs:
+      - name: openfatorial-dev
+        patch: {}
+        placement:
+          clusterSelector:
+            name: laranja
+          namespaceSelector:
+            name: default
+    type: env-binding
+  workflow:
+    steps:
+    - name: openfatorial-dev
+      properties:
+        env: openfatorial-dev
+        policy: env-bindings-openfatorial-dev
+      type: deploy2env      

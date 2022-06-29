@@ -15,7 +15,12 @@ inputs:
     global: true
     items:
       - "net6.0"
-                                      
+  - label: Region Endpoint
+    type: text
+    global: true
+    name: region_endpoint
+    default: "sa-east-1"
+
 global-computed-inputs:
   project_type: "Api"
   project_name_formated: "{{project_name | to_kebab}}"

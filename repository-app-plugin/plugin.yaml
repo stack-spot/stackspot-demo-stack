@@ -5,6 +5,7 @@ types:
 inputs:
 - label: Region Endpoint
   type: text
+  global: true
   name: region_endpoint
   default: "sa-east-1"
 
