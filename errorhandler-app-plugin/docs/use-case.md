@@ -1,0 +1,1 @@
+O **errorhandler-app-plugin** adiciona em uma stack a capacidade de padronizar os retornos de erro das aplicações REST.

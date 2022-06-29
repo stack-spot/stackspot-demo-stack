@@ -1,0 +1,6 @@
+type: app
+description: Template para desenvolver uma API completa usando C#, podendo executar em um cluster de contêiner.
+
+template: stackspot-demo-stack/api-template
+plugins:
+ - plugin: stackspot-demo-stack/errorhandler-app-plugin

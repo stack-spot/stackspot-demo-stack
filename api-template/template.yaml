@@ -1,0 +1,77 @@
+name: api-template
+description: plugin base para desenvolver uma API completa usando C# e REST, em execução em um cluster de contêiner
+types:
+  - app-template
+inputs:
+  - label: Project name
+    type: text
+    name: project_name
+    global: true
+    default: project-name
+  - label: Target Framework
+    type: text
+    default: "net6.0"
+    name: framework
+    global: true
+    items:
+      - "net6.0"
+                                      
+global-computed-inputs:
+  project_type: "Api"
+  project_name_formated: "{{project_name | to_kebab}}"
+  src_base_path: ""
+
+computed-inputs: 
+  version: "{% if global_inputs.framework == 'net6.0' %}{{'stackspot.rest'}}{% else %}{{'stackspot.rest.net5'}}{% endif %}"
+  package: "{% if global_inputs.framework == 'net6.0' %}{{'StackSpot.Template.Rest'}}{% else %}{{'StackSpot.Template.Rest.5.0'}}{% endif %}"
+
+hooks:
+  - type: run-script
+    trigger: before-render
+    script: scripts/script.py
+
+#package / apply template / install dotnet-format
+  - type: run
+    trigger: after-render
+    windows:      
+      - dotnet new -i {{computed_inputs.package}} --force
+      - dotnet new {{computed_inputs.version}} -n {{global_inputs.project_name}} -p {{global_inputs.project_name}} -o '{{target_path | replace('\\','\/')}}' --skipRestore true --force      
+      - dotnet new tool-manifest
+      - dotnet tool install --local dotnet-format
+    linux:
+      - dotnet new -i {{computed_inputs.package}} --force
+      - dotnet new {{computed_inputs.version}} -n {{global_inputs.project_name}} -p {{global_inputs.project_name}} -o '{{target_path}}' --skipRestore true --force      
+      - dotnet new tool-manifest
+      - dotnet tool install --local dotnet-format
+    mac:
+      - dotnet new -i {{computed_inputs.package}} --force
+      - dotnet new {{computed_inputs.version}} -n {{global_inputs.project_name}} -p {{global_inputs.project_name}} -o '{{target_path}}' --skipRestore true --force      
+      - dotnet new tool-manifest
+      - dotnet tool install --local dotnet-format  
+
+lifecycle:
+  deploy:
+    deploy-command: bash deploy.sh
+    
+displayName: Rest - Template
+
+picture: "template.png"
+
+category: Backend, Api, Rest
+
+compatibility:
+  - net5.0
+  - net6.0
+
+about: docs/about.md
+
+usage: docs/usage.md
+
+useCase: docs/useCase.md
+
+implementation: docs/implementation.md
+
+technologies: 
+  - .NET
+  - C#
+  - Api

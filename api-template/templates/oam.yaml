@@ -1,0 +1,21 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: {{project_name | to_kebab}}
+  namespace: default
+spec:
+  components:
+    - name: {{project_name | to_kebab}}
+      properties:
+        accountId: "657358158938"
+        addRevisionLabel: false
+        clusterOidc: arn:aws:iam::657358158938:oidc-provider/oidc.eks.sa-east-1.amazonaws.com/id/1032B0E57ECD594A74833DA57A7672B2
+        exposeType: ClusterIP
+        image: stackspot/dotnet-demo-api:10.0.0
+        region: sa-east-1
+        registry: docker.io/
+      type: microservice
+      properties:
+        accountId: ""
+        image: 
+        targetPort: 5001

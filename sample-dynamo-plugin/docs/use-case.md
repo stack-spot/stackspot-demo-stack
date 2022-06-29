@@ -1,0 +1,1 @@
+O **sample-dynamo-plugin** adiciona em uma stack a implementação que será utilizada na demonstração.

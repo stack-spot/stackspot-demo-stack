@@ -1,0 +1,43 @@
+name: sample-dynamo-plugin
+description: Cria um exemplo completo de comunicação com o DynamoDB.
+display-name: Sample DynamoDB Implementation
+picture: plugin.png
+category: Backend
+compatibility:
+  - net5.0
+  - net6.0
+
+about: docs/about.md
+
+usage: docs/usage.md
+
+useCase: docs/use-case.md
+
+implementation: docs/implementation.md
+
+technologies:
+  - "Api"
+  - "AWS DynamoDB"
+types:
+  - app
+
+hooks:
+  #dependencyinjection
+  - type: edit
+    trigger: before-render
+    path: "{{computed_inputs.base_path}}/src/{{project_name}}.Infrastructure/DependencyInjection.cs"
+    changes:
+      - search:
+          string: "return services;"
+          insert-before:
+            value: "services.AddScoped<ICustomerRepository, CustomerRepository>();"
+          when:
+            not-exists: "services.AddScoped<ICustomerRepository, CustomerRepository>();"
+   
+      - search:
+          string: "using"
+          insert-before:
+            value: "using {{project_name}}.Domain.Interfaces.Repositories; \n
+using {{project_name}}.Infrastructure.Repositories;"
+          when:
+            not-exists: "using {{project_name}}.Infrastructure.Repositories;"

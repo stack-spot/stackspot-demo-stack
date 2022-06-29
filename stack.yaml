@@ -1,0 +1,23 @@
+description: Desenvolva e publique APIs para conectar softwares da empresa no seu produto com nossa Stack cloud native .NET.
+name: stackspot-demo-stack
+display-name: Stack API
+picture: stack.png
+category: Backend
+compatibility:
+  - net5.0
+  - net6.0
+technologies: 
+  - .NET
+  - C#
+  - Api
+  - OpenAPI
+  - AWS DynamoDB
+  - Docker
+about: api-template/docs/about.md
+useCases:
+  - title: Basic API
+    content: api-template/docs/useCase.md
+    stackfile: stackfiles/basic-api.yaml
+  - title: Dynamo 
+    content: sample-dynamo-plugin/docs/use-case.md
+    stackfile: stackfiles/dynamo.yaml

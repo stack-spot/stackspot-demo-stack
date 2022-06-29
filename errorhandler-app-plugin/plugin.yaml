@@ -1,0 +1,61 @@
+name: errorhandler-app-plugin
+description: Plug-in para padronizar os retornos de erro das aplicações REST.
+types:
+- app
+
+computed-inputs: 
+  file: "{% if global_inputs.framework == 'net6.0' %}{{'Program.cs'}}{% else %}{{'Startup.cs'}}{% endif %}"
+  base_path: "{% if global_computed_inputs.src_base_path is defined and global_computed_inputs.src_base_path != '' %}{{global_computed_inputs.src_base_path}}{% else %}{{'.'}}{% endif %}"
+
+hooks:
+#package
+  - type: run
+    trigger: before-render
+    commands:
+      - dotnet add {{computed_inputs.base_path}}/src/{{global_inputs.project_name}}.Application package StackSpot.ErrorHandler
+      - dotnet add {{computed_inputs.base_path}}/src/{{global_inputs.project_name}}.Infrastructure package StackSpot.ErrorHandler
+#dependencyinjection
+  - type: edit
+    trigger: before-render
+    path: "{{computed_inputs.base_path}}/src/{{project_name}}.Api/{{computed_inputs.file}}"
+    changes:
+      - search:
+          string: "using"
+          insert-before:
+            value: "using StackSpot.ErrorHandler;"
+          when:
+            not-exists: "using StackSpot.ErrorHandler;"
+      - search:
+          string: "app.UseRouting()"
+          insert-before:
+            value: "app.UseErrorHandler();\n"
+          when:
+            not-exists: "app.UseErrorHandler();"
+#format
+  - type: run
+    trigger: after-render
+    working-dir: "{{computed_inputs.base_path}}/src/{{project_name}}.Api"
+    commands:
+      -  dotnet dotnet-format --include-generated
+
+displayName: Error Handler
+
+picture: "plugin.png"
+
+category: Backend, ErrorHandler
+
+compatibility:
+  - net5.0
+  - net6.0
+
+about: docs/about.md
+
+usage: docs/usage.md
+
+useCase: docs/use-case.md
+
+implementation: docs/implementation.md
+
+technologies: 
+  - .NET
+  - C#
