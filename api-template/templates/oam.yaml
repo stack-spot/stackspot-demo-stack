@@ -7,30 +7,17 @@ spec:
   components:
     - name: {{project_name | to_kebab}}
       properties:
-        accountId: "401767127224"
+        accountId: "870332510631"
         addRevisionLabel: false
-        clusterOidc: arn:aws:iam::401767127224:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/01E2AA384A35E5978648E6558BFA59A5
+        clusterOidc: arn:aws:iam::870332510631:oidc-provider/oidc.eks.sa-east-1.amazonaws.com/id/9BCFFCA3D5ED4A7FADB1AE0C32B2BCC8
         exposeType: ClusterIP
         image: docker.io/stackspot/dotnet-demo-api:10.0.1
         region: {{region_endpoint}}
         targetPort: 5001
       type: microservice
   policies:
-  - name: env-bindings-openfatorial-dev
-    properties:
-      envs:
-      - name: openfatorial-dev
-        patch: {}
-        placement:
-          clusterSelector:
-            name: laranja
-          namespaceSelector:
-            name: default
-    type: env-binding
-  workflow:
-    steps:
-    - name: openfatorial-dev
+    - name: deploy-demo
+      type: topology
       properties:
-        env: openfatorial-dev
-        policy: env-bindings-openfatorial-dev
-      type: deploy2env      
+        clusters: ["stackspot-prod"]
+        namespace: default 
